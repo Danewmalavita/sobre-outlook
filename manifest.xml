@@ -13,9 +13,9 @@
   <DisplayName DefaultValue="Sobre Clásico"/>
   <Description DefaultValue="Recupera la animación del sobre al enviar correos, como en el Outlook clásico."/>
 
-  <IconUrl DefaultValue="https://TU-USUARIO.github.io/sobre-outlook/icon-64.png"/>
-  <HighResolutionIconUrl DefaultValue="https://TU-USUARIO.github.io/sobre-outlook/icon-128.png"/>
-  <SupportUrl DefaultValue="https://TU-USUARIO.github.io/sobre-outlook/"/>
+  <IconUrl DefaultValue="https://danewmalavita.github.io/sobre-outlook/icon-64.png"/>
+  <HighResolutionIconUrl DefaultValue="https://danewmalavita.github.io/sobre-outlook/icon-128.png"/>
+  <SupportUrl DefaultValue="https://danewmalavita.github.io/sobre-outlook/"/>
 
   <AppDomains>
     <AppDomain>https://TU-USUARIO.github.io</AppDomain>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sobre Clásico</title>
+<script src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: #fff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ── IDLE ── */
+#idle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 0 24px;
+  transition: opacity 0.2s;
+}
+
+.icon-env {
+  opacity: 0.12;
+}
+
+.hint {
+  font-size: 12px;
+  color: #605e5c;
+  text-align: center;
+  line-height: 1.6;
+}
+
+#btn-send {
+  background: #0078D4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 11px 0;
+  width: 100%;
+  max-width: 200px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.2px;
+  transition: background 0.15s, transform 0.1s;
+  box-shadow: 0 2px 8px rgba(0,120,212,0.3);
+}
+#btn-send:hover  { background: #106EBE; }
+#btn-send:active { background: #005A9E; transform: scale(0.98); }
+
+/* ── ANIMATION ── */
+#anim {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+#stage {
+  position: relative;
+  width: 200px;
+  height: 140px;
+}
+
+.env {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%,-50%);
+  width: 110px; height: 77px;
+  opacity: 0;
+  filter: drop-shadow(0 4px 14px rgba(0,120,212,0.35));
+}
+.env.appear { animation: appear 0.5s cubic-bezier(.34,1.56,.64,1) forwards; }
+.env.fly    { animation: fly 1.3s cubic-bezier(.4,0,.2,1) forwards; }
+
+@keyframes appear {
+  from { opacity:0; transform:translate(-50%,-50%) scale(0.35) rotate(-6deg); }
+  to   { opacity:1; transform:translate(-50%,-50%) scale(1) rotate(0deg); }
+}
+@keyframes fly {
+  0%   { opacity:1; transform:translate(-50%,-50%) rotate(0deg) scale(1); }
+  28%  { opacity:1; transform:translate(-22%,-165%) rotate(-13deg) scale(1.08); }
+  65%  { opacity:0.55; transform:translate(80%,-330%) rotate(23deg) scale(0.62); }
+  100% { opacity:0; transform:translate(230%,-590%) rotate(40deg) scale(0.2); }
+}
+
+#status {
+  font-size: 13px;
+  font-weight: 600;
+  color: #323130;
+  letter-spacing: 0.2px;
+  min-height: 20px;
+}
+#status.sent { color: #107C10; }
+
+/* ── DONE ── */
+#done {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 0 24px;
+}
+.check-circle {
+  width: 54px; height: 54px;
+  border-radius: 50%;
+  background: #DFF6DD;
+  display: flex; align-items: center; justify-content: center;
+  animation: pop 0.4s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop { from{transform:scale(0)} to{transform:scale(1)} }
+.done-title { font-size:15px; font-weight:600; color:#107C10; }
+.done-sub   { font-size:12px; color:#605e5c; text-align:center; line-height:1.5; }
+#btn-again {
+  background: none;
+  border: 1px solid #0078D4;
+  color: #0078D4;
+  border-radius: 4px;
+  padding: 8px 28px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-top: 4px;
+}
+#btn-again:hover { background: #EFF6FC; }
+
+/* Particles */
+.dot {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: dotfade 0.58s ease-out forwards;
+}
+@keyframes dotfade {
+  from { opacity:0.85; transform:scale(1); }
+  to   { opacity:0; transform:scale(0.15) translate(var(--tx),var(--ty)); }
+}
+</style>
+</head>
+<body>
+
+<!-- IDLE -->
+<div id="idle">
+  <svg class="icon-env" width="72" height="50" viewBox="0 0 80 56" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="8" width="80" height="48" rx="4" fill="#0078D4"/>
+    <path d="M0,8 L40,34 L80,8" fill="#005A9E"/>
+    <path d="M0,56 L30,36" fill="none" stroke="#005A9E" stroke-width="1.5"/>
+    <path d="M80,56 L50,36" fill="none" stroke="#005A9E" stroke-width="1.5"/>
+    <rect x="22" y="18" width="36" height="24" rx="2" fill="white" opacity="0.25"/>
+  </svg>
+  <p class="hint">Pulsa el botón para enviar el correo con la animación clásica del sobre.</p>
+  <button id="btn-send" onclick="doSend()">✉ Enviar con sobre</button>
+</div>
+
+<!-- ANIMATION -->
+<div id="anim">
+  <div id="stage">
+    <div class="env" id="env">
+      <svg viewBox="0 0 110 77" xmlns="http://www.w3.org/2000/svg" width="110" height="77">
+        <rect x="0" y="11" width="110" height="66" rx="5" fill="#0078D4" stroke="#004E8C" stroke-width="1.2"/>
+        <path id="flap" d="M0,11 L55,47 L110,11" fill="#005A9E"/>
+        <path d="M0,11 L55,45 L110,11" fill="none" stroke="#1A86D9" stroke-width="0.8" opacity="0.45"/>
+        <path d="M0,77 L40,50" fill="none" stroke="#004E8C" stroke-width="1.2"/>
+        <path d="M110,77 L70,50" fill="none" stroke="#004E8C" stroke-width="1.2"/>
+        <rect x="29" y="25" width="52" height="34" rx="3" fill="white" opacity="0.18"/>
+        <line x1="35" y1="34" x2="75" y2="34" stroke="white" stroke-width="2" opacity="0.6" stroke-linecap="round"/>
+        <line x1="35" y1="41" x2="75" y2="41" stroke="white" stroke-width="1.5" opacity="0.38" stroke-linecap="round"/>
+        <line x1="35" y1="48" x2="57" y2="48" stroke="white" stroke-width="1.5" opacity="0.38" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+  <div id="status">Enviando...</div>
+</div>
+
+<!-- DONE -->
+<div id="done">
+  <div class="check-circle">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#107C10" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  </div>
+  <div class="done-title">¡Enviado!</div>
+  <div class="done-sub">El correo se ha enviado correctamente.</div>
+  <button id="btn-again" onclick="reset()">Enviar otro</button>
+</div>
+
+<script>
+Office.onReady(function(){});
+
+const $ = id => document.getElementById(id);
+
+function doSend() {
+  $('idle').style.opacity = '0';
+  setTimeout(() => {
+    $('idle').style.display = 'none';
+    $('anim').style.display = 'flex';
+    $('status').textContent = 'Enviando...';
+    $('status').className = '';
+
+    setTimeout(() => { $('env').classList.add('appear'); spawnDots(8); }, 120);
+    setTimeout(() => animateFlap(), 650);
+    setTimeout(() => {
+      $('env').classList.remove('appear');
+      $('env').classList.add('fly');
+      spawnDots(13);
+
+      // Enviar el correo mediante la API de Office
+      Office.context.mailbox.item.send();
+
+    }, 1050);
+    setTimeout(() => {
+      $('status').textContent = '✓ Enviado';
+      $('status').className = 'sent';
+    }, 2100);
+    setTimeout(() => {
+      $('anim').style.display = 'none';
+      $('done').style.display = 'flex';
+    }, 2750);
+  }, 220);
+}
+
+function reset() {
+  $('env').className = 'env';
+  $('done').style.display = 'none';
+  $('idle').style.display = 'flex';
+  $('idle').style.opacity = '1';
+}
+
+function animateFlap() {
+  const flap = $('flap');
+  const dur = 265; let s = null;
+  const ease = p => p < .5 ? 2*p*p : -1+(4-2*p)*p;
+  requestAnimationFrame(function up(ts) {
+    if (!s) s = ts;
+    const p = Math.min((ts-s)/dur, 1);
+    flap.setAttribute('d', `M0,11 L55,${47 - ease(p)*62} L110,11`);
+    if (p < 1) requestAnimationFrame(up);
+    else { s = null; setTimeout(() => requestAnimationFrame(function dn(ts2) {
+      if (!s) s = ts2;
+      const p2 = Math.min((ts2-s)/dur, 1);
+      flap.setAttribute('d', `M0,11 L55,${47 - 62 + ease(p2)*62} L110,11`);
+      if (p2 < 1) requestAnimationFrame(dn);
+    }), 55); }
+  });
+}
+
+function spawnDots(n) {
+  const stage = $('stage');
+  const cols = ['#C7E0F4','#2B88D8','#71AFE5','#0078D4','#A9D3F5','#EFF6FC'];
+  for (let i = 0; i < n; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    const sz = 5 + Math.random()*7;
+    const a  = Math.random() * Math.PI * 2;
+    const r  = 28 + Math.random()*46;
+    d.style.cssText = `width:${sz}px;height:${sz}px;background:${cols[i%6]};` +
+      `left:calc(50% + ${Math.cos(a)*10}px);top:calc(50% + ${Math.sin(a)*6}px);` +
+      `--tx:${Math.cos(a)*r}px;--ty:${Math.sin(a)*r}px;animation-delay:${i*36}ms`;
+    stage.appendChild(d);
+    setTimeout(() => d.remove(), 720+i*36);
+  }
+}
+</script>
+</body>
+</html>

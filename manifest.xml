@@ -3,7 +3,6 @@
   xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
-  xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
   xsi:type="MailApp">
 
   <Id>c9d8e7f6-a5b4-3210-fedc-ba9876543210</Id>
@@ -13,12 +12,12 @@
   <DisplayName DefaultValue="Sobre Clásico"/>
   <Description DefaultValue="Recupera la animación del sobre al enviar correos, como en el Outlook clásico."/>
 
-  <IconUrl DefaultValue="https://danewmalavita.github.io/sobre-outlook/icon-64.png"/>
-  <HighResolutionIconUrl DefaultValue="https://danewmalavita.github.io/sobre-outlook/icon-128.png"/>
+  <IconUrl DefaultValue="https://danewmalavita.github.io/sobre-outlook/icon-80.png"/>
+  <HighResolutionIconUrl DefaultValue="https://danewmalavita.github.io/sobre-outlook/icon-80.png"/>
   <SupportUrl DefaultValue="https://danewmalavita.github.io/sobre-outlook/"/>
 
   <AppDomains>
-    <AppDomain>https://TU-USUARIO.github.io</AppDomain>
+    <AppDomain>https://danewmalavita.github.io</AppDomain>
   </AppDomains>
 
   <Hosts>
@@ -35,17 +34,18 @@
     <Form xsi:type="ItemEdit">
       <DesktopSettings>
         <SourceLocation DefaultValue="https://danewmalavita.github.io/sobre-outlook/taskpane.html"/>
-        <RequestedHeight>230</RequestedHeight>
       </DesktopSettings>
     </Form>
   </FormSettings>
 
   <Permissions>ReadWriteItem</Permissions>
+
   <Rule xsi:type="RuleCollection" Mode="Or">
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
   </Rule>
 
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+
     <Requirements>
       <bt:Sets DefaultMinVersion="1.3">
         <bt:Set Name="Mailbox"/>
@@ -85,8 +85,8 @@
 
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16" DefaultValue="https://danewmalavita.github.io/sobre-outlook/icon-16.png"/>
-        <bt:Image id="Icon.32" DefaultValue="https://danewmalavita.github.io/sobre-outlook/icon-32.png"/>
+        <bt:Image id="Icon.16" DefaultValue="https://danewmalavita.github.io/sobre-outlook/icon-80.png"/>
+        <bt:Image id="Icon.32" DefaultValue="https://danewmalavita.github.io/sobre-outlook/icon-80.png"/>
         <bt:Image id="Icon.80" DefaultValue="https://danewmalavita.github.io/sobre-outlook/icon-80.png"/>
       </bt:Images>
       <bt:Urls>
@@ -101,5 +101,6 @@
         <bt:String id="Taskpane.Tooltip" DefaultValue="Envía el correo con la animación clásica del sobre de Outlook."/>
       </bt:LongStrings>
     </Resources>
+
   </VersionOverrides>
 </OfficeApp>
